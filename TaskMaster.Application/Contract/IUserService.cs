@@ -7,7 +7,7 @@ using TaskMaster.Core.Entities;
 
 namespace TaskMaster.Application.Contract
 {
-    public interface IUser
+    public interface IUserService
     {
         public UserResponse LoginResource(string Username, string Password);
         public  int RegisterResource(string Username, string Email, string Password);

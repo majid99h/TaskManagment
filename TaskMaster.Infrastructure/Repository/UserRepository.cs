@@ -10,7 +10,7 @@ using TaskMaster.Infrastructure.IRepository;
 
 namespace TaskMaster.Infrastructure.Repository
 {
-    public class UserRepository : IUserRepo
+    public class UserRepository : IUserRepository
     {
         private readonly string _pepper;
         private readonly int _iteration = 3;

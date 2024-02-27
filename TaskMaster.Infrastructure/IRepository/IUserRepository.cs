@@ -2,7 +2,7 @@
 
 namespace TaskMaster.Infrastructure.IRepository
 {
-    public interface IUserRepo
+    public interface IUserRepository
     {
         public UserResponse LoginResource(string Username, string Password);
         public int RegisterResource(string Username, string Email, string Password);

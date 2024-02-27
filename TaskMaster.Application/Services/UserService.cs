@@ -5,14 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskMaster.Application.Contract;
 using TaskMaster.Core.Entities;
+using TaskMaster.Infrastructure.IRepository;
 
 namespace TaskMaster.Application.Services
 {
-    public class UserService : IUser
+    public class UserService(IUserRepository userRepo) : IUserService
     {
+        private readonly IUserRepository _userRepo = userRepo;
         public UserResponse LoginResource(string Username, string Password)
         {
-            throw new NotImplementedException();
+            return _userRepo.LoginResource(Username, Password);
         }
 
         public int RegisterResource(string Username, string Email, string Password)

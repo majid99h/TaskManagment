@@ -12,4 +12,10 @@ namespace TaskMaster.Core.Entities
         public string UserName { get; set; } = string.Empty;
         public string Token { get; set; } = string.Empty;        
     }
+    public class UserRequest
+    {
+        
+        public string UserName { get; set; } = string.Empty;
+        public string Paswword { get; set; } = string.Empty;
+    }
 }

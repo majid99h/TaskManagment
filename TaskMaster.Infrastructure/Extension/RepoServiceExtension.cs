@@ -12,7 +12,8 @@ namespace TaskMaster.Infrastructure.Extension
             services.AddSingleton<AppSettingsReader>();
             services.AddScoped<IDbConfiguration, DbConfiguration>();
             services.AddScoped<ITaskRepository, TaskRepository>();
-           return services;
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+            return services;
         }
     }
 }
