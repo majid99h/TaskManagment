@@ -8,10 +8,29 @@ namespace TaskMaster.Infrastructure.Repository
     public class ProjectRepository(IDbConfiguration dbConfig) : IProjectRepository
     {
         private readonly IDbConfiguration _dbConfig = dbConfig;
-        public Task<int> CreateProjectAsync(Project prj)
+
+
+        public async Task<int> CreateProjectAsync(Project prj)
         {
-            throw new NotImplementedException();
+            using var connection = _dbConfig.CreateConnection();
+
+            var query = @"INSERT INTO Projects (
+            ProjectName, Description, StartDate, EndDate, UserID,
+            CreatedDate, ModifiedDate, IsActive, IsCompleted,
+            CreatedBy, ModifiedBy, MarkCompleted
+        )
+             OUTPUT INSERTED.ProjectID
+             VALUES (
+            @ProjectName, @Description, @StartDate, @EndDate, @UserID,
+            @CreatedDate, @ModifiedDate, @IsActive, @IsCompleted,
+            @CreatedBy, @ModifiedBy, @MarkCompleted
+        )";
+
+            int insertedId = await connection.QuerySingleAsync<int>(query, prj);
+
+            return insertedId;
         }
+
 
         public Task<bool> DeleteProjectAsync(int prjId)
         {
@@ -26,14 +45,46 @@ namespace TaskMaster.Infrastructure.Repository
             return await connection.QueryAsync<Project>(query);
         }
 
-        public Task<Project> GetProjectByIdAsync(int prjId)
+        public async Task<Project> GetProjectByIdAsync(int prjId)
         {
-            throw new NotImplementedException();
+            using var connection = _dbConfig.CreateConnection();
+            string query = @"select * from Projects where ProjectId=@prjId";
+           
+
+            return await connection.QuerySingleAsync<Project>(query);
         }
 
-        public Task<bool> UpdateProjectAsync(Project prj)
+        public async Task<bool> UpdateProjectAsync(Project prj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var connection = _dbConfig.CreateConnection();
+
+                var query = @"UPDATE Projects
+            SET
+            ProjectName = @ProjectName,
+            Description = @Description,
+            StartDate = @StartDate,
+            EndDate = @EndDate,
+            UserID = @UserID,
+            ModifiedDate = @ModifiedDate,
+            IsActive = @IsActive,
+            IsCompleted = @IsCompleted,
+            CreatedBy = @CreatedBy,
+            ModifiedBy = @ModifiedBy,
+            MarkCompleted = @MarkCompleted
+            WHERE ProjectID = @ProjectID
+            )";
+
+                int rowsAffected = await connection.ExecuteAsync(query, prj);
+
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }

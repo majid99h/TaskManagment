@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskMaster.Application.Contract;
 using TaskMaster.Application.Services;
+using TaskMaster.Core.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,8 +16,8 @@ namespace TaskMaster.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var tasks = await _projectService.GetAllProjectAsync();
-            return Ok(tasks);
+            var response = await _projectService.GetAllProjectAsync();
+            return Ok(response);
         }
         // GET api/<ProjectController>/5
         [HttpGet("{id}")]
@@ -27,14 +28,18 @@ namespace TaskMaster.Web.Controllers
 
         // POST api/<ProjectController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Project prj)
         {
+            var response = await _projectService.CreateProjectAsync(prj);
+            return Ok(response);
         }
 
         // PUT api/<ProjectController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put([FromBody] Project prj)
         {
+            var response = await _projectService.UpdateProjectAsync(prj);
+            return Ok(response);
         }
 
         // DELETE api/<ProjectController>/5

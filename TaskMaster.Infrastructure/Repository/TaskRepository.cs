@@ -7,9 +7,36 @@ namespace TaskMaster.Infrastructure.Repository
     {
         private readonly IDbConfiguration _dbConfig = dbConfig;
 
-        public Task<int> CreateTaskAsync(Task task)
+        public async Task<int> CreateTaskAsync(Task task)
         {
-            throw new NotImplementedException();
+            using var connection = _dbConfig.CreateConnection();
+            var query = @"INSERT INTO Tasks
+           (TaskName
+           ,Description
+           ,DueDate
+           ,Priority
+           ,Status
+           ,ProjectID
+           ,AssignedUserID
+           ,CreatedDate
+			,IsDeleted
+           ,CreatedBy
+           ,MarkCompleted)
+           OUTPUT INSERTED.TaskID
+           VALUES
+           (@TaskName
+           ,@Description
+           ,@DueDate
+           ,@Priority
+           ,@Status
+           ,@ProjectID
+           ,@AssignedUserID
+           ,@CreatedDate
+			,@IsDeleted
+           ,@CreatedBy
+           ,@MarkCompleted)";
+            int response = await connection.QuerySingleAsync<int>(query,task);
+            return response;
         }
 
         public Task<bool> DeleteTaskAsync(int taskId)

@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "SqlConnection": "Server=tcp:taskmasterpro01.database.windows.net,1433;Initial Catalog=TaskMaster.Web_db;Persist Security Info=False;User ID=majid;Password='P@ss202403;';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  }
+}

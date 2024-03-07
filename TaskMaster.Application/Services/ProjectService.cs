@@ -15,7 +15,7 @@ namespace TaskMaster.Application.Services
         private readonly IProjectRepository _projectRepository = projectRepository;
         public Task<int> CreateProjectAsync(Project prj)
         {
-            throw new NotImplementedException();
+          return _projectRepository.CreateProjectAsync(prj);
         }
 
         public Task<bool> DeleteProjectAsync(int prjId)
@@ -35,7 +35,7 @@ namespace TaskMaster.Application.Services
 
         public Task<bool> UpdateProjectAsync(Project prj)
         {
-            throw new NotImplementedException();
+           return _projectRepository.UpdateProjectAsync(prj);
         }
     }
 }

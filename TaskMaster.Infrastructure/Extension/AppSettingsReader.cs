@@ -9,7 +9,7 @@ namespace TaskMaster.Infrastructure.Extension
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)  // Set the base path to the location of your appsettings.json file
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                .AddJsonFile("dbconfig.json", optional: true, reloadOnChange: true);
 
             _configuration = builder.Build();
         }
