@@ -13,7 +13,7 @@
         public bool IsActive { get; set; }
         public bool IsCompleted { get; set; }
         public int CreatedBy { get; set; }
-        public int ModifedBy { get; set; }
+        public int? ModifiedBy { get; set; }
         public int MarkCompleted { get; set; }
 
     }

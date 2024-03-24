@@ -12,9 +12,11 @@ namespace TaskMaster.Infrastructure.Repository
 
         public async Task<int> CreateProjectAsync(Project prj)
         {
-            using var connection = _dbConfig.CreateConnection();
+            try
+            {
+                using var connection = _dbConfig.CreateConnection();
 
-            var query = @"INSERT INTO Projects (
+                var query = @"INSERT INTO Projects (
             ProjectName, Description, StartDate, EndDate, UserID,
             CreatedDate, ModifiedDate, IsActive, IsCompleted,
             CreatedBy, ModifiedBy, MarkCompleted
@@ -26,9 +28,15 @@ namespace TaskMaster.Infrastructure.Repository
             @CreatedBy, @ModifiedBy, @MarkCompleted
         )";
 
-            int insertedId = await connection.QuerySingleAsync<int>(query, prj);
+                int insertedId = await connection.QuerySingleAsync<int>(query, prj);
 
-            return insertedId;
+                return insertedId;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
 
