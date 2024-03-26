@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TaskMaster.Core.Entities;
 
 namespace TaskMaster.Infrastructure.IRepository
 {
     public interface ITaskRepository
     {
-        Task<Task> GetTaskByIdAsync(int taskId);
-        Task<IEnumerable<Task>> GetAllTasksAsync();
-        Task<int> CreateTaskAsync(Task task);
-        Task<bool> UpdateTaskAsync(Task task);
+        Task<Tasks> GetTaskByIdAsync(int taskId);
+        Task<IEnumerable<Tasks>> GetAllTasksAsync();
+        Task<int> CreateTaskAsync(Tasks task);
+        Task<bool> UpdateTaskAsync(Tasks task);
         Task<bool> DeleteTaskAsync(int taskId);
     }
 }

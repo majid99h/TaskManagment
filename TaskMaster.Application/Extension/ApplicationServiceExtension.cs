@@ -12,8 +12,8 @@ namespace TaskMaster.Application.Extension
             services.AddRepoService();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IProjectService, ProjectService>();
-
-
+            services.AddScoped<IAttachmentService, AttachmentService>();
+            services.AddScoped<ICommentService, CommentService>();
 
             return services;
         }

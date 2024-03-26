@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using TaskMaster.Core.Entities;
 using TaskMaster.Infrastructure.IRepository;
 
 namespace TaskMaster.Infrastructure.Repository
@@ -7,7 +8,7 @@ namespace TaskMaster.Infrastructure.Repository
     {
         private readonly IDbConfiguration _dbConfig = dbConfig;
 
-        public async Task<int> CreateTaskAsync(Task task)
+        public async Task<int> CreateTaskAsync(Tasks task)
         {
             using var connection = _dbConfig.CreateConnection();
             var query = @"INSERT INTO Tasks
@@ -35,7 +36,7 @@ namespace TaskMaster.Infrastructure.Repository
 			,@IsDeleted
            ,@CreatedBy
            ,@MarkCompleted)";
-            int response = await connection.QuerySingleAsync<int>(query,task);
+            int response = await connection.QuerySingleAsync<int>(query, task);
             return response;
         }
 
@@ -44,22 +45,53 @@ namespace TaskMaster.Infrastructure.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Task>> GetAllTasksAsync()
+        public async Task<IEnumerable<Tasks>> GetAllTasksAsync()
         {
             var query = "SELECT * FROM Tasks";
             using var connection = _dbConfig.CreateConnection();
-            var response = await connection.QueryAsync<Task>(query);
+            var response = await connection.QueryAsync<Tasks>(query);
             return response.ToList();
         }
 
-        public Task<Task> GetTaskByIdAsync(int taskId)
+        public async Task<Tasks> GetTaskByIdAsync(int taskId)
         {
-            throw new NotImplementedException();
+            using var connection = _dbConfig.CreateConnection();
+            string query = @"select * from Projects where TaskID=@taskId";
+
+
+            return await connection.QuerySingleAsync<Tasks>(query);
         }
 
-        public Task<bool> UpdateTaskAsync(Task task)
+
+
+        public async Task<bool> UpdateTaskAsync(Tasks task)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var connection = _dbConfig.CreateConnection();
+
+                var query = @"UPDATE Tasks
+                             SET TaskName = @TaskName, 
+                             Description = @Description, 
+                             DueDate = @DueDate,
+                             Priority = @Priority, 
+                             Status = @Status, 
+                             AssignedUserID = @AssignedUserID, 
+		                     ModifiedDate = @ModifiedDate, 
+                             ModifiedBy = @ModifiedBy, 
+                             MarkCompleted = @MarkCompleted, 
+                             WHERE TaskID=@TaskID
+            )";
+
+                int rowsAffected = await connection.ExecuteAsync(query, task);
+
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                throw;
+
+            }
         }
     }
 }

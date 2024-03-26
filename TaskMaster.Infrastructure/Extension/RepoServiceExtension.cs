@@ -13,6 +13,8 @@ namespace TaskMaster.Infrastructure.Extension
             services.AddScoped<IDbConfiguration, DbConfiguration>();
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IAttachmentRepository, AttachmentRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
             return services;
         }
     }

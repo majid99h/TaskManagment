@@ -1,4 +1,5 @@
 ﻿using TaskMaster.Application.Contract;
+using TaskMaster.Core.Entities;
 using TaskMaster.Infrastructure.IRepository;
 
 namespace TaskMaster.Application.Services
@@ -7,7 +8,7 @@ namespace TaskMaster.Application.Services
     {
         private readonly ITaskRepository _taskRepository = taskRepository;
 
-        public Task<int> CreateTaskAsync(Task task)
+        public Task<int> CreateTaskAsync(Tasks task)
         {
           return _taskRepository.CreateTaskAsync(task);
         }
@@ -17,17 +18,17 @@ namespace TaskMaster.Application.Services
            return _taskRepository.DeleteTaskAsync(taskId);
         }
 
-        public Task<IEnumerable<Task>> GetAllTasksAsync()
+        public Task<IEnumerable<Tasks>> GetAllTasksAsync()
         {
             return _taskRepository.GetAllTasksAsync();
         }
 
-        public Task<Task> GetTaskByIdAsync(int taskId)
+        public Task<Tasks> GetTaskByIdAsync(int taskId)
         {
             return _taskRepository.GetTaskByIdAsync(taskId);
         }
 
-        public Task<bool> UpdateTaskAsync(Task task)
+        public Task<bool> UpdateTaskAsync(Tasks task)
         {
            return  _taskRepository.UpdateTaskAsync(task);
         }
